@@ -6,12 +6,19 @@ import 'dashboard.dart';
 
 
 
- class Authorization extends StatelessWidget {
+ class Authorization extends StatefulWidget {
   final String verificationId;
   final TextEditingController phoneController;
-  bool _isLoading = false;
 
   Authorization({super.key, required this.verificationId, required this.phoneController});
+
+  @override
+  State<Authorization> createState() => _AuthorizationState();
+}
+
+class _AuthorizationState extends State<Authorization> {
+  bool _isLoading = false;
+
    @override
    Widget build(BuildContext context) {
      Size size = MediaQuery.of(context).size;
@@ -127,12 +134,11 @@ import 'dashboard.dart';
 
    }
 
-
    void _verifyCode(BuildContext context, String smsCode) async {
      try {
        // Create the credential using the verification ID and the SMS code provided by the user
        PhoneAuthCredential credential = PhoneAuthProvider.credential(
-         verificationId: verificationId,
+         verificationId: widget.verificationId,
          smsCode: smsCode,
        );
 
@@ -153,4 +159,4 @@ import 'dashboard.dart';
        );
      }
    }
- }
+}
