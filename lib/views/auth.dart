@@ -9,6 +9,7 @@ import 'dashboard.dart';
  class Authorization extends StatelessWidget {
   final String verificationId;
   final TextEditingController phoneController;
+  bool _isLoading = false;
 
   Authorization({super.key, required this.verificationId, required this.phoneController});
    @override
@@ -71,6 +72,7 @@ import 'dashboard.dart';
                          children: [
                            GestureDetector(
                              onTap: () {
+                               _isLoading?null:
                                _verifyCode(context, codeController.text);
                              },
                              child: Container(
@@ -105,7 +107,14 @@ import 'dashboard.dart';
 
                    ),
                  ],
-               ))
+               )),
+                 if (_isLoading)
+                   Container(
+                     color: Colors.black.withOpacity(0.5),
+                     child: Center(
+                       child: CircularProgressIndicator(),
+                     ),
+                   ),
 
                ],
              )
@@ -117,6 +126,7 @@ import 'dashboard.dart';
      );
 
    }
+
 
    void _verifyCode(BuildContext context, String smsCode) async {
      try {
