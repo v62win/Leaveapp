@@ -3,21 +3,6 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Calendar',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: CalendarScreen(),
-    );
-  }
-}
-
 class CalendarScreen extends StatefulWidget {
   @override
   _CalendarScreenState createState() => _CalendarScreenState();

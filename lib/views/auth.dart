@@ -151,7 +151,7 @@ class _AuthorizationState extends State<Authorization> {
        );
 
        // Navigate to the next screen or home page
-       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => DashBoard(),), (route) => route.isFirst);
+       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => CalendarScreen(),), (route) => route.isFirst);
      } catch (e) {
        // Handle error
        ScaffoldMessenger.of(context).showSnackBar(
