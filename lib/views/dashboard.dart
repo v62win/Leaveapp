@@ -7,7 +7,7 @@ class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
 
   @override
-  _CalendarScreenState createState() => _CalendarScreenState();
+  State<CalendarScreen> createState() => _CalendarScreenState();
 }
 
 class _CalendarScreenState extends State<CalendarScreen> {
@@ -17,7 +17,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   final TextEditingController _leaveController = TextEditingController();
 
   Future<void> _sendLeaveRequest(DateTime date, String leaveReason) async {
-    final url = 'https://yourapi.com/leave'; // Replace with your API URL
+    const url = 'https://yourapi.com/leave'; // Replace with your API URL
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -31,11 +31,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Leave request sent successfully')),
+        const SnackBar(content: Text('Leave request sent successfully')),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to send leave request')),
+        const SnackBar(content: Text('Failed to send leave request')),
       );
     }
   }
@@ -44,7 +44,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calendar Leave Request'),
+        title: const Text('Calendar Leave Request'),
       ),
       body: Column(
         children: [
@@ -77,7 +77,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _leaveController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Leave Reason',
                 border: OutlineInputBorder(),
               ),
@@ -88,7 +88,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             onPressed: () {
               _sendLeaveRequest(_selectedDay, _leaveController.text);
             },
-            child: Text('Send Leave Request'),
+            child: const Text('Send Leave Request'),
           ),
         ],
       ),
