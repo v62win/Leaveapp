@@ -18,6 +18,37 @@ import 'dashboard.dart';
 
 class _AuthorizationState extends State<Authorization> {
   bool _isLoading = false;
+  void _verifyCode(BuildContext context, String smsCode) async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      // Create the credential using the verification ID and the SMS code provided by the user
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: widget.verificationId,
+        smsCode: smsCode,
+      );
+
+      // Use the credential to sign in
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // Successfully signed in
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Successfully signed in!')),
+      );
+
+      // Navigate to the next screen or home page
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => CalendarScreen(),), (route) => route.isFirst);
+    } catch (e) {
+      // Handle error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to verify OTP: $e')),
+      );
+    }
+    setState(() {
+      _isLoading = false ;
+    });
+  }
 
    @override
    Widget build(BuildContext context) {
@@ -134,29 +165,5 @@ class _AuthorizationState extends State<Authorization> {
 
    }
 
-   void _verifyCode(BuildContext context, String smsCode) async {
-     try {
-       // Create the credential using the verification ID and the SMS code provided by the user
-       PhoneAuthCredential credential = PhoneAuthProvider.credential(
-         verificationId: widget.verificationId,
-         smsCode: smsCode,
-       );
 
-       // Use the credential to sign in
-       await FirebaseAuth.instance.signInWithCredential(credential);
-
-       // Successfully signed in
-       ScaffoldMessenger.of(context).showSnackBar(
-         SnackBar(content: Text('Successfully signed in!')),
-       );
-
-       // Navigate to the next screen or home page
-       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => CalendarScreen(),), (route) => route.isFirst);
-     } catch (e) {
-       // Handle error
-       ScaffoldMessenger.of(context).showSnackBar(
-         SnackBar(content: Text('Failed to verify OTP: $e')),
-       );
-     }
-   }
 }
