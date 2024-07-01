@@ -50,17 +50,17 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBXgBw5ERMz_GnoDn0NY6mN-yCXGbIu3Vo',
-    appId: '1:165252696405:android:3aa58a10f59dda6922c7dc',
-    messagingSenderId: '165252696405',
+    apiKey: 'your api key',
+    appId: 'your api id',
+    messagingSenderId: '********',
     projectId: 'leavemanager-a091e',
     storageBucket: 'leavemanager-a091e.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAvG8AWZRJV9dzOdnZeaRdUKiN8J0I21WU',
-    appId: '1:165252696405:ios:c5bfb2b14b94fa9322c7dc',
-    messagingSenderId: '165252696405',
+    apiKey: 'api key',
+    appId: 'api id',
+    messagingSenderId: '*******',
     projectId: 'leavemanager-a091e',
     storageBucket: 'leavemanager-a091e.appspot.com',
     iosBundleId: 'com.example.leavemanager',

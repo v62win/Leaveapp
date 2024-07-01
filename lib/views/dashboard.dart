@@ -46,7 +46,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Calendar Leave Request'),
+        title: const Text('Leave Request'),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
