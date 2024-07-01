@@ -60,7 +60,7 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'api key',
     appId: 'api id',
-    messagingSenderId: '*******',
+    messagingSenderId: '******',
     projectId: 'leavemanager-a091e',
     storageBucket: 'leavemanager-a091e.appspot.com',
     iosBundleId: 'com.example.leavemanager',
