@@ -14,10 +14,13 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final TextEditingController _contactcontroller = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  bool _isLoading = false;
 
 
   void clicklogin() {
+    setState(() {
+      _isLoading = true;
+    });
     _auth.verifyPhoneNumber(
       phoneNumber: '+91 ${_contactcontroller.text}',
       verificationCompleted: _onVerificationCompleted,
@@ -53,6 +56,9 @@ class _SignInState extends State<SignIn> {
 
   void _onCodeAutoRetrievalTimeout(String verificationId) {
     // Timeout reached while waiting for the OTP
+    setState(() {
+      _isLoading = false;
+    });
   }
 
 
@@ -113,6 +119,7 @@ class _SignInState extends State<SignIn> {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                _isLoading?null:
                                 clicklogin();
                               },
                               child: Container(
@@ -141,6 +148,7 @@ class _SignInState extends State<SignIn> {
                               ),
 
 
+
                             )],
 
                         )
@@ -149,6 +157,13 @@ class _SignInState extends State<SignIn> {
                ],
                 )
             ),
+              if (_isLoading)
+                Container(
+                  color: Colors.black.withOpacity(0.5),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
 
             ]
              )]),

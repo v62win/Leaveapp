@@ -6,11 +6,50 @@ import 'dashboard.dart';
 
 
 
- class Authorization extends StatelessWidget {
+ class Authorization extends StatefulWidget {
   final String verificationId;
   final TextEditingController phoneController;
 
   Authorization({super.key, required this.verificationId, required this.phoneController});
+
+  @override
+  State<Authorization> createState() => _AuthorizationState();
+}
+
+class _AuthorizationState extends State<Authorization> {
+  bool _isLoading = false;
+  void _verifyCode(BuildContext context, String smsCode) async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      // Create the credential using the verification ID and the SMS code provided by the user
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: widget.verificationId,
+        smsCode: smsCode,
+      );
+
+      // Use the credential to sign in
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // Successfully signed in
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Successfully signed in!')),
+      );
+
+      // Navigate to the next screen or home page
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => CalendarScreen(),), (route) => route.isFirst);
+    } catch (e) {
+      // Handle error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to verify OTP: $e')),
+      );
+    }
+    setState(() {
+      _isLoading = false ;
+    });
+  }
+
    @override
    Widget build(BuildContext context) {
      Size size = MediaQuery.of(context).size;
@@ -71,6 +110,7 @@ import 'dashboard.dart';
                          children: [
                            GestureDetector(
                              onTap: () {
+                               _isLoading?null:
                                _verifyCode(context, codeController.text);
                              },
                              child: Container(
@@ -105,7 +145,14 @@ import 'dashboard.dart';
 
                    ),
                  ],
-               ))
+               )),
+                 if (_isLoading)
+                   Container(
+                     color: Colors.black.withOpacity(0.5),
+                     child: Center(
+                       child: CircularProgressIndicator(),
+                     ),
+                   ),
 
                ],
              )
@@ -118,29 +165,5 @@ import 'dashboard.dart';
 
    }
 
-   void _verifyCode(BuildContext context, String smsCode) async {
-     try {
-       // Create the credential using the verification ID and the SMS code provided by the user
-       PhoneAuthCredential credential = PhoneAuthProvider.credential(
-         verificationId: verificationId,
-         smsCode: smsCode,
-       );
 
-       // Use the credential to sign in
-       await FirebaseAuth.instance.signInWithCredential(credential);
-
-       // Successfully signed in
-       ScaffoldMessenger.of(context).showSnackBar(
-         SnackBar(content: Text('Successfully signed in!')),
-       );
-
-       // Navigate to the next screen or home page
-       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => DashBoard(),), (route) => route.isFirst);
-     } catch (e) {
-       // Handle error
-       ScaffoldMessenger.of(context).showSnackBar(
-         SnackBar(content: Text('Failed to verify OTP: $e')),
-       );
-     }
-   }
- }
+}

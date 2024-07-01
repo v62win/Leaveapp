@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'colors.dart';
-import 'prelogin_page.dart';
+import 'wrapper.dart';
  
 
 class Splashscreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class _SplashscreenState extends State<Splashscreen> {
             ()=>Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
                 (context) =>
-                const Firstscreen()
+                const authwrapper()
             )
         )
     );
